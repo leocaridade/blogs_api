@@ -25,6 +25,14 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
+      },
+      published: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updated: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     }, { timestamps: false });
   },
