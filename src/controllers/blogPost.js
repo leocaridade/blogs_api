@@ -49,8 +49,30 @@ const getBlogPostById = async (req, res) => {
   }
 };
 
+const updateBlogPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+      return res.status(400).json({ message: 'Some required fields are missing' });
+    } 
+
+    if (Number(id) !== req.user.dataValues.id) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    } 
+
+    await BlogPostService.updateBlogPost(id, title, content);
+    const updatedBlogPost = await BlogPostService.getBlogPostById(id);
+    return res.status(200).json(updatedBlogPost);
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal error', error: error.message });
+  }
+};
+
 module.exports = {
   createBlogPost,
   getAllBlogPosts,
   getBlogPostById,
+  updateBlogPost,
 };
