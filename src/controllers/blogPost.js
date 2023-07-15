@@ -23,10 +23,20 @@ const createBlogPost = async (req, res) => {
   const newPostCategory = categoryIds.map((categoryId) => ({ postId, categoryId }));
   
   await PostCategoryService.createMultiplePostCategories(newPostCategory);
-  
+  req.postId = newPost.id;
   return res.status(201).json(newPost);
+};
+
+const getAllBlogPosts = async (_req, res) => {
+  try {
+    const blogPosts = await BlogPostService.getAllBlogPosts();
+    return res.status(200).json(blogPosts);
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal error', error: error.message });
+  }
 };
 
 module.exports = {
   createBlogPost,
+  getAllBlogPosts,
 };
