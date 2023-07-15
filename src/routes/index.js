@@ -4,7 +4,7 @@ const login = require('../controllers/login');
 const { createUser, getAllUsers, getUserById } = require('../controllers/user');
 const validateJwt = require('../middleware/validateJwt');
 const { createCategory, getAllCategories } = require('../controllers/category');
-const { createBlogPost, getAllBlogPosts } = require('../controllers/blogPost');
+const { createBlogPost, getAllBlogPosts, getBlogPostById } = require('../controllers/blogPost');
 
 const routes = express.Router();
 
@@ -16,5 +16,6 @@ routes.post('/categories', validateJwt, createCategory);
 routes.get('/categories', validateJwt, getAllCategories);
 routes.post('/post', validateJwt, createBlogPost);
 routes.get('/post', validateJwt, getAllBlogPosts);
+routes.get('/post/:id', validateJwt, getBlogPostById);
 
 module.exports = routes;
