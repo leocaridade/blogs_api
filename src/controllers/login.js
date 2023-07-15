@@ -1,11 +1,5 @@
-const jwt = require('jsonwebtoken');
 const { UserService } = require('../services');
-
-const secret = process.env.JWT_SECRET || 'secretJWT';
-const jwtConfig = {
-  expiresIn: '30m',
-  algorithm: 'HS256',
-};
+const { createToken } = require('../auth/authfunctions');
 
 const isBodyValid = (email, password) => email && password;
 
@@ -27,7 +21,7 @@ module.exports = async (req, res) => {
 
     const payload = { data: userWithoutPassword };
 
-    const token = jwt.sign(payload, secret, jwtConfig);
+    const token = createToken(payload);
 
     return res.status(200).json({ token }); 
   } catch (error) {
