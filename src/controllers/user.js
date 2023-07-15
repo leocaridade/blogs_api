@@ -8,8 +8,8 @@ const createUser = async (req, res) => {
 
     if (result) {
       const { status, message } = result;
-    return res.status(status).json({ message });
-  }
+      return res.status(status).json({ message });
+    }
 
     const newUser = await UserService.createUser(req.body);
 
