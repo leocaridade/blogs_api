@@ -1,5 +1,5 @@
-const { getPayload } = require("../auth/authfunctions");
-const { UserService } = require("../services");
+const { getPayload } = require('../auth/authfunctions');
+const { UserService } = require('../services');
 
 function extractToken(bearerToken) {
   return bearerToken.includes(' ') ? bearerToken.split(' ')[1] : bearerToken;
@@ -25,7 +25,6 @@ const validateJwt = async (req, res, next) => {
   } catch (error) {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
-  
 };
 
 module.exports = validateJwt;
