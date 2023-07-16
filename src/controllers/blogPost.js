@@ -70,7 +70,7 @@ const updateBlogPost = async (req, res) => {
   }
 };
 
-const deleteBlogPost = async (req, res) => {
+const deleteBlogPostById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -82,7 +82,7 @@ const deleteBlogPost = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized user' });
     } 
 
-    await BlogPostService.deleteBlogPost(id);
+    await BlogPostService.deleteBlogPostById(id);
 
     return res.status(204).json();
   } catch (error) {
@@ -95,5 +95,5 @@ module.exports = {
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
-  deleteBlogPost,
+  deleteBlogPostById,
 };

@@ -1,5 +1,5 @@
 const validateUser = require('../utils/validateUser');
-const { UserService } = require('../services');
+const { UserService, BlogPostService } = require('../services');
 const { createToken } = require('../auth/authfunctions');
 
 const createUser = async (req, res) => {
@@ -49,8 +49,23 @@ const getUserById = async (req, res) => {
   }
 };
 
+const deleteMe = async (req, res) => {
+  try {
+    const userId = req.user.dataValues.id;
+
+    await BlogPostService.deleteBlogPostsByUserId(userId);
+
+    await UserService.deleteMe(userId);
+
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal error', error: error.message });
+  }
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   getUserById,
+  deleteMe,
 };

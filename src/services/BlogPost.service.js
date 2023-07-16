@@ -23,12 +23,15 @@ const updateBlogPost = async (id, title, content) => {
   return updatedBlogPost;
 };
 
-const deleteBlogPost = (id) => BlogPost.destroy({ where: { id } });
+const deleteBlogPostById = (id) => BlogPost.destroy({ where: { id } });
+
+const deleteBlogPostsByUserId = (userId) => BlogPost.destroy({ where: { userId } });
 
 module.exports = {
   createBlogPost,
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
-  deleteBlogPost,
+  deleteBlogPostById,
+  deleteBlogPostsByUserId,
 };
