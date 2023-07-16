@@ -70,9 +70,30 @@ const updateBlogPost = async (req, res) => {
   }
 };
 
+const deleteBlogPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const blogPost = await BlogPostService.getBlogPostById(id);
+
+    if (!blogPost) return res.status(404).json({ message: 'Post does not exist' });
+
+    if (blogPost.dataValues.userId !== req.user.dataValues.id) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    } 
+
+    await BlogPostService.deleteBlogPost(id);
+
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal error', error: error.message });
+  }
+};
+
 module.exports = {
   createBlogPost,
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
+  deleteBlogPost,
 };

@@ -9,6 +9,7 @@ const {
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
+  deleteBlogPost,
 } = require('../controllers/blogPost');
 
 const routes = express.Router();
@@ -23,5 +24,6 @@ routes.put('/post/:id', validateJwt, updateBlogPost);
 routes.post('/post', validateJwt, createBlogPost);
 routes.get('/post', validateJwt, getAllBlogPosts);
 routes.get('/post/:id', validateJwt, getBlogPostById);
+routes.delete('/post/:id', validateJwt, deleteBlogPost);
 
 module.exports = routes;
