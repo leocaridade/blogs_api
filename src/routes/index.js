@@ -10,6 +10,7 @@ const {
   getBlogPostById,
   updateBlogPost,
   deleteBlogPostById,
+  getAllBlogPostsByQuery,
 } = require('../controllers/blogPost');
 
 const routes = express.Router();
@@ -21,6 +22,7 @@ routes.get('/user/:id', validateJwt, getUserById);
 routes.delete('/user/me', validateJwt, deleteMe);
 routes.post('/categories', validateJwt, createCategory);
 routes.get('/categories', validateJwt, getAllCategories);
+routes.get('/post/search', validateJwt, getAllBlogPostsByQuery);
 routes.put('/post/:id', validateJwt, updateBlogPost);
 routes.post('/post', validateJwt, createBlogPost);
 routes.get('/post', validateJwt, getAllBlogPosts);

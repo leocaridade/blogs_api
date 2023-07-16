@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 
 const createBlogPost = (post) => BlogPost.create(post);
@@ -27,6 +28,18 @@ const deleteBlogPostById = (id) => BlogPost.destroy({ where: { id } });
 
 const deleteBlogPostsByUserId = (userId) => BlogPost.destroy({ where: { userId } });
 
+const getAllBlogPostsByQuery = (searchTerm) => BlogPost.findAll({
+  where: {
+    [Op.or]: [
+      { title: { [Op.like]: `%${searchTerm}%` } },
+      { content: { [Op.like]: `%${searchTerm}%` } },
+    ],
+  },
+  include: [
+    { model: User, as: 'user', attributes: { exclude: 'password' } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ] });
+
 module.exports = {
   createBlogPost,
   getAllBlogPosts,
@@ -34,4 +47,5 @@ module.exports = {
   updateBlogPost,
   deleteBlogPostById,
   deleteBlogPostsByUserId,
+  getAllBlogPostsByQuery,
 };
